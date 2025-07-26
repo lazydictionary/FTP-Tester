@@ -1,0 +1,22 @@
+.failure-button {
+  background-color: #ff4444;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.failure-button:hover {
+  background-color: #cc0000;
+}
+
+.results {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+}
