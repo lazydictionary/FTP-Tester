@@ -39,8 +39,9 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
           onClick={() => setTestType('20min')}
         >
           <h3>20-Minute Test</h3>
-          <p>• Uses 95% of your <strong>Goal FTP</strong></p>
-          <p>• Constant power output</p>
+          <p>• Based on your <strong>Goal FTP</strong> </p>
+          <p>• Uses 95% of your average wattage</p>
+          <p>• Choice of constant or interval output</p>
           <p>• Best for experienced cyclists</p>
         </div>
 
@@ -49,9 +50,10 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
           onClick={() => setTestType('ramp')}
         >
           <h3>Ramp Test</h3>
-          <p>• Uses your <strong>Current FTP</strong></p>
-          <p>• Gradually increasing difficulty</p>
-          <p>• Better for beginners</p>
+          <p>• Based on your <strong>Current FTP</strong></p>
+          <p>• Uses 75% of best minute of output</p>
+          <p>• Gradually ramp in difficulty</p>
+          <p>• Recommended for beginners</p>
         </div>
       </div>
 
@@ -62,8 +64,8 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
             type="number"
             value={currentFTP}
             onChange={(e) => setCurrentFTP(Number(e.target.value))}
-            min="100"
-            max="500"
+            min="50"
+            max="999"
             required
           />
         </label>
@@ -77,7 +79,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
                 value={goalFTP}
                 onChange={(e) => setGoalFTP(Number(e.target.value))}
                 min={currentFTP + 1}
-                max="500"
+                max="999"
                 required
               />
             </label>
