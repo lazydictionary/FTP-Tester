@@ -57,7 +57,7 @@
 .theme-toggle {
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 20px;
   padding: 10px 15px;
   font-size: 1.2rem;
   cursor: pointer;
@@ -73,22 +73,21 @@
 .power-display {
   background: var(--power-bg);
   border: 3px solid var(--power-border);
-  border-radius: 24px;
-  padding: 40px 20px;
+  border-radius: 20px;
+  padding: 10px 10px;
   text-align: center;
-  margin: 0 auto 40px;
-  max-width: 400px;
+  margin: 0 auto 20px;
+  width: 50%;
   box-shadow: 0 10px 30px var(--shadow);
   transition: all 0.3s ease;
 }
 
 .power-display:hover {
-  transform: translateY(-2px);
   box-shadow: 0 15px 40px var(--shadow-hover);
 }
 
 .power-value {
-  font-size: 4.5rem;
+  font-size: 3.0rem;
   font-weight: 800;
   color: var(--power-border);
   line-height: 1;
@@ -97,14 +96,14 @@
 }
 
 .power-unit {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: var(--text-secondary);
   margin-left: 10px;
 }
 
 .stage-indicator {
-  font-size: 1.3rem;
+  font-size: 1.0rem;
   font-weight: 600;
   color: var(--text-accent);
   background: var(--bg-secondary);
@@ -132,6 +131,7 @@
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   border-radius: 20px;
+  width: 50%;
   padding: 25px;
   box-shadow: 0 8px 25px var(--shadow);
   transition: all 0.3s ease;
@@ -142,15 +142,18 @@
 }
 
 .end-test-button {
+  display: flex;
   background: linear-gradient(135deg, #f44336, #d32f2f);
   color: white;
   padding: 18px;
   font-size: 18px;
   font-weight: 600;
   border: none;
-  border-radius: 12px;
+  border-radius: 20px;
   cursor: pointer;
-  width: 100%;
+  width: 50%;
+  margin: 0 auto;
+  justify-content: center;
   margin-top: 20px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
