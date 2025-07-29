@@ -34,20 +34,19 @@ export default function PowerGraph({
     const ctx = canvasRef.current;
     if (!ctx) return;
 
-    // Safer cleanup function
+    // Cleanup function to remove chart and marker
     const cleanup = () => {
       if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
       }
-      
       if (markerRef.current && containerRef.current && markerRef.current.parentNode === containerRef.current) {
         containerRef.current.removeChild(markerRef.current);
+        markerRef.current = null;
       }
-      markerRef.current = null;
     };
 
-    // Perform cleanup before creating new chart
+    // Clean up before creating new chart/marker
     cleanup();
 
     // Calculate dynamic y-axis min/max
@@ -166,8 +165,8 @@ export default function PowerGraph({
       }
   });
 
-    // Create new marker if container exists and marker doesn't
-    if (containerRef.current && !markerRef.current) {
+    // Always create a new marker after cleanup
+    if (containerRef.current) {
       markerRef.current = document.createElement('div');
       markerRef.current.style.position = 'absolute';
       markerRef.current.style.width = '2px';

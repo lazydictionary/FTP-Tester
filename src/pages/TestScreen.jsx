@@ -84,15 +84,13 @@ export default function TestScreen({
           testType={testType}
           darkMode={darkMode}
         />
+        <button 
+          onClick={() => setIsRunning(false)}
+          className="end-test-button"
+        >
+          End Test
+        </button>
       </div>
-
-      {/* Show End Test button for both test types */}
-      <button 
-        onClick={() => setIsRunning(false)}
-        className="end-test-button"
-      >
-        End Test
-      </button>
     </div>
   );
 }

@@ -128,6 +128,11 @@
 }
 
 .timer-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   border-radius: 20px;
@@ -135,14 +140,27 @@
   padding: 25px;
   box-shadow: 0 8px 25px var(--shadow);
   transition: all 0.3s ease;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .timer-controls:hover {
   box-shadow: 0 12px 35px var(--shadow-hover);
 }
 
+.timer-controls .timer-container,
+.timer-controls .end-test-button {
+  width: 50%;
+  align-content: center;
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 350px;
+  box-sizing: border-box;
+}
+
 .end-test-button {
-  display: flex;
+  display: block;
+  margin: 0 auto;
   background: linear-gradient(135deg, #f44336, #d32f2f);
   color: white;
   padding: 18px;
@@ -151,7 +169,7 @@
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   justify-content: center;
   margin-top: 20px;

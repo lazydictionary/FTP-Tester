@@ -24,11 +24,11 @@ export default function Timer({ seconds, isRunning, onToggle, testType }) {
       >
         {isRunning ? (
           <>
-            <span className="icon">⏸</span> Pause
+            <span className="icon">⏸</span>Pause
           </>
         ) : (
           <>
-            <span className="icon">▶</span> Start
+            <span className="icon">▶</span>Start
           </>
         )}
       </button>

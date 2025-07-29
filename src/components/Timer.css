@@ -1,13 +1,17 @@
 .timer-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 15px;
+  justify-content: center;
+  width: 100%;
 }
 
 .time-display {
   font-size: 1.1rem;
   color: #555;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 10px;;
 }
 
 .time-value {
@@ -19,16 +23,20 @@
 }
 
 .timer-button {
-  padding: 10px 20px;
+  display: block;
+  margin: 0 auto;
+  color: white;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  margin-top: 20px;
+  transition: all 0.3s ease;
 }
 
 .timer-button.start {
