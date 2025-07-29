@@ -2,32 +2,38 @@ import React, { useState } from 'react';
 import './SetupScreen.css';
 import { TwentyMinTestProtocols, WarmupProtocols } from './TestProtocols';
 
-console.log(require.resolve('./TestProtocols'))
-
-export default function SetupScreen({ onStartTest }) {
+export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
   const [currentFTP, setCurrentFTP] = useState(250);
   const [goalFTP, setGoalFTP] = useState(300);
-  const [testType, setTestType] = useState('20min'); // '20min' or 'ramp'
+  const [testType, setTestType] = useState('20min');
   const [selectedProtocol, setSelectedProtocol] = useState(TwentyMinTestProtocols.STANDARD);
   const [selectedWarmup, setSelectedWarmup] = useState(null);
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  onStartTest({
-    testType,
-    currentFTP,
-    goalFTP,
-    protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD, // Always include protocol
-    warmup: testType === '20min' ? selectedWarmup : null,
-  });
-};
+    e.preventDefault();
+    onStartTest({
+      testType,
+      currentFTP,
+      goalFTP,
+      protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD,
+      warmup: testType === '20min' ? selectedWarmup : null,
+    });
+  };
 
   return (
-    <div className="setup-container">
-      <h1>Select Your FTP Test</h1>
+    <div className={`setup-container ${darkMode ? 'dark' : 'light'}`}>
+      <div className="header">
+        <h1>Select Your FTP Test</h1>
+        <button 
+          onClick={toggleDarkMode}
+          className="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
       
       <div className="test-options">
-        {/* 20-minute Test Option */}
         <div 
           className={`test-card ${testType === '20min' ? 'active' : ''}`}
           onClick={() => setTestType('20min')}
@@ -38,7 +44,6 @@ export default function SetupScreen({ onStartTest }) {
           <p>• Best for experienced cyclists</p>
         </div>
 
-        {/* Ramp Test Option */}
         <div 
           className={`test-card ${testType === 'ramp' ? 'active' : ''}`}
           onClick={() => setTestType('ramp')}
