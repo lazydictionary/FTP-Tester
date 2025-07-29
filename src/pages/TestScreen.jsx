@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import PowerGraph from '../components/PowerGraph';
-import Timer from '../components/Timer';
+import PowerGraph from 'src/components/PowerGraph';
+import Timer from 'src/components/Timer';
 
 export default function TestScreen({ 
   testType, 
