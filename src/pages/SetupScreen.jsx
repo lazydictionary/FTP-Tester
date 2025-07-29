@@ -2,51 +2,57 @@ import React, { useState } from 'react';
 import './SetupScreen.css';
 import { TwentyMinTestProtocols, WarmupProtocols } from './TestProtocols';
 
-console.log(require.resolve('./TestProtocols'))
-
-export default function SetupScreen({ onStartTest }) {
-  const [currentFTP, setCurrentFTP] = useState(250);
-  const [goalFTP, setGoalFTP] = useState(300);
-  const [testType, setTestType] = useState('20min'); // '20min' or 'ramp'
+export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
+  const [currentFTP, setCurrentFTP] = useState(150);
+  const [goalFTP, setGoalFTP] = useState(175);
+  const [testType, setTestType] = useState('ramp');
   const [selectedProtocol, setSelectedProtocol] = useState(TwentyMinTestProtocols.STANDARD);
   const [selectedWarmup, setSelectedWarmup] = useState(null);
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  onStartTest({
-    testType,
-    currentFTP,
-    goalFTP,
-    protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD, // Always include protocol
-    warmup: testType === '20min' ? selectedWarmup : null,
-  });
-};
+    e.preventDefault();
+    onStartTest({
+      testType,
+      currentFTP,
+      goalFTP,
+      protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD,
+      warmup: testType === '20min' ? selectedWarmup : null,
+    });
+  };
 
   return (
-    <div className="setup-container">
-      <h1>Select Your FTP Test</h1>
+    <div className={`setup-container ${darkMode ? 'dark' : 'light'}`}>
+      <div className="header">
+        <h1>Select Your FTP Test</h1>
+        <button 
+          onClick={toggleDarkMode}
+          className="theme-toggle"
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
       
       <div className="test-options">
-        {/* 20-minute Test Option */}
-        <div 
-          className={`test-card ${testType === '20min' ? 'active' : ''}`}
-          onClick={() => setTestType('20min')}
-        >
-          <h3>20-Minute Test</h3>
-          <p>• Uses 95% of your <strong>Goal FTP</strong></p>
-          <p>• Constant power output</p>
-          <p>• Best for experienced cyclists</p>
-        </div>
-
-        {/* Ramp Test Option */}
         <div 
           className={`test-card ${testType === 'ramp' ? 'active' : ''}`}
           onClick={() => setTestType('ramp')}
         >
           <h3>Ramp Test</h3>
-          <p>• Uses your <strong>Current FTP</strong></p>
-          <p>• Gradually increasing difficulty</p>
-          <p>• Better for beginners</p>
+          <p>• Based on your <strong>Current FTP</strong></p>
+          <p>• Uses 75% of best minute of output</p>
+          <p>• Gradually ramp in difficulty</p>
+          <p>• Recommended for beginners</p>
+        </div>
+        <div 
+          className={`test-card ${testType === '20min' ? 'active' : ''}`}
+          onClick={() => setTestType('20min')}
+        >
+          <h3>20-Minute Test</h3>
+          <p>• Based on your <strong>Goal FTP</strong> </p>
+          <p>• Uses 95% of your average wattage</p>
+          <p>• Choice of constant or interval output</p>
+          <p>• Best for experienced cyclists</p>
         </div>
       </div>
 
@@ -57,8 +63,8 @@ export default function SetupScreen({ onStartTest }) {
             type="number"
             value={currentFTP}
             onChange={(e) => setCurrentFTP(Number(e.target.value))}
-            min="100"
-            max="500"
+            min="50"
+            max="999"
             required
           />
         </label>

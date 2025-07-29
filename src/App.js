@@ -5,11 +5,20 @@ import { TwentyMinTestProtocols } from './pages/TestProtocols';
 
 function App() {
   const [testParams, setTestParams] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
 
   return (
-    <div className="app">
+    <>
       {!testParams ? (
-        <SetupScreen onStartTest={setTestParams} />
+        <SetupScreen 
+          onStartTest={setTestParams} 
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
       ) : (
         <TestScreen 
           testType={testParams.testType}
@@ -17,9 +26,11 @@ function App() {
           goalFTP={testParams.goalFTP}
           protocol={testParams.protocol || TwentyMinTestProtocols.STANDARD}
           warmup={testParams.warmup}
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
         />
       )}
-    </div>
+    </>
   );
 }
 

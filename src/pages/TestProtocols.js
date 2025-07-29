@@ -1,15 +1,23 @@
 export const TwentyMinTestProtocols = {
   STANDARD: {
-    name: "Standard (95% FTP)",
-    description: "Constant power at 95% of goal FTP",
-    calculatePower: (goalFTP, elapsed) => goalFTP * 0.95
+    name: "Standard",
+    description: "Constant power at Goal FTP",
+    calculatePower: (goalFTP, elapsed) => goalFTP / 0.95
   },
   DESCENDING: {
     name: "Descending Intervals",
-    description: "Starts at 105% FTP, decreases every 5 minutes",
+    description: "Starts at 110% FTP, decreases every 5 minutes",
     calculatePower: (goalFTP, elapsed) => {
       const segment = Math.floor(elapsed / 300);
-      return goalFTP * (1.05 - (segment * 0.05));
+      return goalFTP / 0.95 * (1.10 - (segment * 0.05));
+    }
+  },
+  ASCENDING: {
+    name: "Ascending Intervals",
+    description: "Starts at 90% FTP, increases every 5 minutes",
+    calculatePower: (goalFTP, elapsed) => {
+      const segment = Math.floor(elapsed / 300);
+      return goalFTP / 0.95 * (0.9 + (segment * 0.05));
     }
   }
 };
