@@ -5,7 +5,8 @@ export default function PowerGraph({
   currentFTP, 
   goalFTP,
   testType, 
-  elapsedSeconds 
+  elapsedSeconds,
+  protocol = null
 }) {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -14,21 +15,20 @@ export default function PowerGraph({
 
   // Generate static chart data with minute ticks
   const { data, labels } = useMemo(() => {
-    const totalMinutes = testType === '20min' ? 20 : 30;
-    const data = [];
-    const labels = [];
-    
-    for (let minute = 0; minute <= totalMinutes; minute++) {
-      const power = testType === '20min' 
-        ? goalFTP * 0.95 
-        : currentFTP * (minute < 5 ? 0.46 : 0.46 + 0.06 * (minute - 4));
-      
-      data.push(power);
-      labels.push(minute % 5 === 0 ? `${minute}:00` : '');
-    }
-    
-    return { data, labels };
-  }, [testType, currentFTP, goalFTP]);
+  const totalMinutes = testType === '20min' ? 20 : 30;
+  return {
+    data: Array.from({ length: totalMinutes + 1 }, (_, minute) => {
+      const seconds = minute * 60;
+      if (testType === '20min') {
+        return protocol?.calculatePower?.(goalFTP, seconds) ?? goalFTP * 0.95;
+      }
+      return currentFTP * (minute < 5 ? 0.46 : 0.46 + 0.06 * (minute - 4));
+    }),
+    labels: Array.from({ length: totalMinutes + 1 }, (_, i) => 
+      i % 5 === 0 ? `${i}:00` : ''
+    )
+  };
+}, [testType, currentFTP, goalFTP, protocol]);
 
   // Initialize chart and marker
   useEffect(() => {

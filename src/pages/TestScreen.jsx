@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Timer from '../components/Timer';
 import PowerGraph from '../components/PowerGraph';
-import './TestScreen.css';
+import Timer from '../components/Timer';
 
-export default function TestScreen({ testType, currentFTP, goalFTP }) {
+export default function TestScreen({ 
+  testType, 
+  currentFTP, 
+  goalFTP, 
+  protocol = null,
+  warmup = null
+}) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+
   const getStageText = () => {
     const minutes = elapsedSeconds / 60;
     
@@ -32,10 +38,15 @@ export default function TestScreen({ testType, currentFTP, goalFTP }) {
 
   // Memoized power calculation
   const targetPower = useMemo(() => {
-    if (testType === '20min') return goalFTP * 0.95;
-    const stage = Math.floor(elapsedSeconds / 60);
-    return currentFTP * (stage < 5 ? 0.46 : 0.46 + 0.06 * (stage - 4));
-  }, [testType, goalFTP, currentFTP, elapsedSeconds]);
+  if (testType === '20min') {
+    // Ensure protocol exists and has calculatePower
+    const protocolPower = protocol?.calculatePower?.(goalFTP, elapsedSeconds);
+    return protocolPower ?? goalFTP * 0.95; // Fallback to 95% if protocol is invalid
+  }
+  // Ramp test calculation
+  const stage = Math.floor(elapsedSeconds / 60);
+  return currentFTP * (stage < 5 ? 0.46 : 0.46 + 0.06 * (stage - 4));
+}, [testType, goalFTP, currentFTP, elapsedSeconds, protocol]);
 
   return (
     <div className="test-screen">
@@ -54,6 +65,7 @@ export default function TestScreen({ testType, currentFTP, goalFTP }) {
           goalFTP={goalFTP}
           testType={testType}
           elapsedSeconds={elapsedSeconds}
+          protocol={protocol}
         />
       </div>
 
@@ -69,7 +81,7 @@ export default function TestScreen({ testType, currentFTP, goalFTP }) {
       {testType === 'ramp' && (
         <button 
           onClick={() => setIsRunning(false)}
-          className="end-test-button" // Changed class name
+          className="end-test-button"
         >
           End Test
         </button>

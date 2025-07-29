@@ -1,7 +1,3 @@
-import { useState } from 'react';
-import SetupScreen from './pages/SetupScreen';
-import TestScreen from './pages/TestScreen';
-
 function App() {
   const [testParams, setTestParams] = useState(null);
 
@@ -11,12 +7,13 @@ function App() {
         <SetupScreen onStartTest={setTestParams} />
       ) : (
         <TestScreen 
-          testType={testParams.testType} 
+          testType={testParams.testType}
           currentFTP={testParams.currentFTP}
+          goalFTP={testParams.goalFTP}
+          protocol={testParams.protocol || TwentyMinTestProtocols.STANDARD} // Fallback
+          warmup={testParams.warmup}
         />
       )}
     </div>
   );
 }
-
-export default App;
