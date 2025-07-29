@@ -3,9 +3,9 @@ import './SetupScreen.css';
 import { TwentyMinTestProtocols, WarmupProtocols } from './TestProtocols';
 
 export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
-  const [currentFTP, setCurrentFTP] = useState(250);
-  const [goalFTP, setGoalFTP] = useState(300);
-  const [testType, setTestType] = useState('20min');
+  const [currentFTP, setCurrentFTP] = useState(150);
+  const [goalFTP, setGoalFTP] = useState(175);
+  const [testType, setTestType] = useState('ramp');
   const [selectedProtocol, setSelectedProtocol] = useState(TwentyMinTestProtocols.STANDARD);
   const [selectedWarmup, setSelectedWarmup] = useState(null);
 
@@ -35,17 +35,6 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
       
       <div className="test-options">
         <div 
-          className={`test-card ${testType === '20min' ? 'active' : ''}`}
-          onClick={() => setTestType('20min')}
-        >
-          <h3>20-Minute Test</h3>
-          <p>• Based on your <strong>Goal FTP</strong> </p>
-          <p>• Uses 95% of your average wattage</p>
-          <p>• Choice of constant or interval output</p>
-          <p>• Best for experienced cyclists</p>
-        </div>
-
-        <div 
           className={`test-card ${testType === 'ramp' ? 'active' : ''}`}
           onClick={() => setTestType('ramp')}
         >
@@ -54,6 +43,16 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
           <p>• Uses 75% of best minute of output</p>
           <p>• Gradually ramp in difficulty</p>
           <p>• Recommended for beginners</p>
+        </div>
+        <div 
+          className={`test-card ${testType === '20min' ? 'active' : ''}`}
+          onClick={() => setTestType('20min')}
+        >
+          <h3>20-Minute Test</h3>
+          <p>• Based on your <strong>Goal FTP</strong> </p>
+          <p>• Uses 95% of your average wattage</p>
+          <p>• Choice of constant or interval output</p>
+          <p>• Best for experienced cyclists</p>
         </div>
       </div>
 
@@ -79,7 +78,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
                 value={goalFTP}
                 onChange={(e) => setGoalFTP(Number(e.target.value))}
                 min={currentFTP + 1}
-                max="999"
+                max="500"
                 required
               />
             </label>

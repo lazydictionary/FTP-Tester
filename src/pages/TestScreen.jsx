@@ -15,17 +15,12 @@ export default function TestScreen({
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
+  // Unified stage text for both test types
   const getStageText = () => {
     const minutes = elapsedSeconds / 60;
-    
-    if (testType === '20min') {
-      if (minutes >= 19.5) return 'Current FTP Met';
-      return 'Test in Progress';
-    } else {
-      if (minutes < 5) return 'Warmup Phase';
-      if (minutes >= 19.5) return 'Current FTP Met';
-      return 'Test in Progress';
-    }
+    if (minutes < 5) return 'Warmup Phase';
+    if (minutes >= 19.5) return 'Current FTP Met';
+    return 'Test in Progress';
   };
 
   useEffect(() => {
@@ -50,7 +45,7 @@ export default function TestScreen({
   return (
     <div className={`test-screen ${darkMode ? 'dark' : 'light'}`}>
       <div className="header">
-        <h1>FTP Test</h1>
+        <h1>{testType === '20min' ? '20-Minute FTP Test' : 'Ramp FTP Test'}</h1>
         <button 
           onClick={toggleDarkMode}
           className="theme-toggle"
@@ -91,14 +86,13 @@ export default function TestScreen({
         />
       </div>
 
-      {testType === 'ramp' && (
-        <button 
-          onClick={() => setIsRunning(false)}
-          className="end-test-button"
-        >
-          End Test
-        </button>
-      )}
+      {/* Show End Test button for both test types */}
+      <button 
+        onClick={() => setIsRunning(false)}
+        className="end-test-button"
+      >
+        End Test
+      </button>
     </div>
   );
 }
