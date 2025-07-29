@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './SetupScreen.css';
-import Protocols from './TestProtocols';
-const { TwentyMinTestProtocols, WarmupProtocols } = Protocols;
+import { TwentyMinTestProtocols, WarmupProtocols } from './TestProtocols';
 
-console.log('TwentyMinTestProtocols:', TwentyMinTestProtocols);
+console.log(require.resolve('./TestProtocols'))
 
 export default function SetupScreen({ onStartTest }) {
   const [currentFTP, setCurrentFTP] = useState(250);
@@ -13,15 +12,15 @@ export default function SetupScreen({ onStartTest }) {
   const [selectedWarmup, setSelectedWarmup] = useState(null);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onStartTest({
-      testType,
-      currentFTP,
-      goalFTP,
-      protocol: testType === '20min' ? selectedProtocol : null,
-      warmup: testType === '20min' ? selectedWarmup : null,
-    });
-  };
+  e.preventDefault();
+  onStartTest({
+    testType,
+    currentFTP,
+    goalFTP,
+    protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD, // Always include protocol
+    warmup: testType === '20min' ? selectedWarmup : null,
+  });
+};
 
   return (
     <div className="setup-container">
