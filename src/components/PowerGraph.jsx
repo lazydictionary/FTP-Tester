@@ -30,8 +30,6 @@ export default function PowerGraph({
     };
   }, [testType, currentFTP, goalFTP, protocol]);
 
-  // Function to add/update static marker
-  // Update the updateStaticMarker function
 const updateStaticMarker = useCallback(() => {
   if (!chartRef.current || !containerRef.current || testType === '20min') {  // Changed condition
     return;
@@ -41,12 +39,11 @@ const updateStaticMarker = useCallback(() => {
   if (!chart.chartArea) return;
 
   // Remove existing markers if they exist
-  if (staticMarkerRef.current.line && staticMarkerRef.current.line.parentNode) {
-    containerRef.current.removeChild(staticMarkerRef.current.line);
-  }
-  if (staticMarkerRef.current.label && staticMarkerRef.current.label.parentNode) {
-    containerRef.current.removeChild(staticMarkerRef.current.label);
-  }
+  const existingLine = containerRef.current?.querySelector('.static-marker');
+  const existingLabel = containerRef.current?.querySelector('.static-marker-label');
+
+  if (existingLine?.parentNode) existingLine.parentNode.removeChild(existingLine);
+  if (existingLabel?.parentNode) existingLabel.parentNode.removeChild(existingLabel);
 
   const chartArea = chart.chartArea;
   const xPosition = chartArea.left + (chartArea.right - chartArea.left) * (19.5 / 30); // Changed to 30 for ramp test
@@ -93,20 +90,26 @@ const updateStaticMarker = useCallback(() => {
     if (!ctx) return;
 
     const cleanup = () => {
+      // Clean up chart first
       if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
       }
-      if (markerRef.current && containerRef.current && markerRef.current.parentNode === containerRef.current) {
-        containerRef.current.removeChild(markerRef.current);
-        markerRef.current = null;
+
+      // Safely clean up moving marker
+      if (markerRef.current?.parentNode) {
+        markerRef.current.parentNode.removeChild(markerRef.current);
       }
-      if (staticMarkerRef.current.line && staticMarkerRef.current.line.parentNode) {
-        containerRef.current.removeChild(staticMarkerRef.current.line);
+      markerRef.current = null;
+
+      // Safely clean up static markers
+      if (staticMarkerRef.current.line?.parentNode) {
+        staticMarkerRef.current.line.parentNode.removeChild(staticMarkerRef.current.line);
       }
-      if (staticMarkerRef.current.label && staticMarkerRef.current.label.parentNode) {
-        containerRef.current.removeChild(staticMarkerRef.current.label);
+      if (staticMarkerRef.current.label?.parentNode) {
+        staticMarkerRef.current.label.parentNode.removeChild(staticMarkerRef.current.label);
       }
+      staticMarkerRef.current = { line: null, label: null };
     };
 
     cleanup();

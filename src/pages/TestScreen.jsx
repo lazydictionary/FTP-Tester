@@ -11,7 +11,9 @@ export default function TestScreen({
   warmup = null,
   darkMode,
   toggleDarkMode,
-  onShowResults
+  onShowResults,
+  setShowConfetti,
+  setConfettiActive // <-- Add this prop
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -105,6 +107,8 @@ const calculateFTP = () => {
   // Show results when test ends
   const handleEndTest = () => {
     setIsRunning(false);
+    setShowConfetti(true);
+    setConfettiActive(true); // Start spawning confetti
     const calculatedFTP = calculateFTP();
     onShowResults({
       currentFTP,
@@ -113,6 +117,10 @@ const calculateFTP = () => {
       calculatedFTP,
       peakPower: testType === 'ramp' ? calculatedFTP / 0.75 : calculatedFTP / 0.95
     });
+    // Stop spawning new confetti after 10 seconds, but let existing pieces fall
+    setTimeout(() => setConfettiActive(false), 10000);
+    // Hide confetti overlay after a bit longer (e.g., 15s)
+    setTimeout(() => setShowConfetti(false), 15000);
   };
 
   return (

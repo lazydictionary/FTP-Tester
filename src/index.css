@@ -8,6 +8,11 @@ body {
   transition: background-color 0.3s ease;
 }
 
+body.dark {
+  background-color: #121212; /* Dark gray */
+  color: #ffffff; /* White text */
+}
+
 * {
   box-sizing: border-box;
 }
