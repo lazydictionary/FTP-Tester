@@ -1,33 +1,39 @@
-/* Light mode variables */
 .test-screen.light {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-accent: #f8fff8;
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
-  --text-accent: #2E7D32;
-  --border-color: #e0e0e0;
-  --border-active: #4CAF50;
-  --power-bg: linear-gradient(135deg, #e8f5e8, #f0fff0);
-  --power-border: #4CAF50;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #F1F5F9;
+  --bg-accent: #ECFDF5;
+  --bg-card: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-accent: #059669;
+  --text-muted: #64748B;
+  --border-color: #E2E8F0;
+  --border-active: #10B981;
+  --border-hover: #D1FAE5;
+  --power-bg: #c2e4da;
+  --power-border: #10B981;
+  --power-text: #059669;
+  --shadow: rgba(15, 23, 42, 0.1);
+  --shadow-hover: rgba(15, 23, 42, 0.15);
 }
 
-/* Dark mode variables */
 .test-screen.dark {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2d2d2d;
-  --bg-accent: #1e3a1e;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
-  --text-accent: #66BB6A;
-  --border-color: #404040;
-  --border-active: #66BB6A;
-  --power-bg: linear-gradient(135deg, #1e3a1e, #2d4a2d);
-  --power-border: #66BB6A;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-hover: rgba(0, 0, 0, 0.4);
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --bg-accent: #064E3B;
+  --bg-card: #1E293B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-accent: #6EE7B7;
+  --text-muted: #94A3B8;
+  --border-color: #334155;
+  --border-active: #34D399;
+  --border-hover: #065F46;
+  --power-bg: #064E3B;
+  --power-border: #34D399;
+  --power-text: #6EE7B7;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --shadow-hover: rgba(0, 0, 0, 0.5);
 }
 
 .test-screen {
@@ -159,27 +165,22 @@
 }
 
 .end-test-button {
-  display: block;
-  margin: 0 auto;
-  background: linear-gradient(135deg, #f44336, #d32f2f);
+  background: linear-gradient(135deg, #EF4444, #DC2626);
   color: white;
   padding: 18px;
-  font-size: 18px;
-  font-weight: 600;
   border: none;
   border-radius: 20px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  width: 100%;
-  margin: 0 auto;
-  justify-content: center;
-  margin-top: 20px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
-}
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+} 
 
 .end-test-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, #DC2626, #B91C1C);
 }
 
 .end-test-button:active {

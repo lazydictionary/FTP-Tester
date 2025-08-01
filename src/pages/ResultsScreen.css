@@ -173,9 +173,15 @@
 }
 
 .results-btn-primary {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
   color: white;
   border: none;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+} 
+
+.results-btn-primary:hover {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
 .dark .results-btn-primary {

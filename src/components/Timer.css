@@ -8,16 +8,16 @@
 
 .time-display {
   font-size: 1.1rem;
-  color: #555;
+  color: var(--text-secondary, #475569);
   text-align: center;
   width: 100%;
-  padding-bottom: 10px;;
+  padding-bottom: 10px;
 }
 
 .time-value {
   font-weight: bold;
   font-size: 1.3rem;
-  color: #333;
+  color: var(--text-primary, #0F172A);
   min-width: 60px;
   display: inline-block;
 }
@@ -40,18 +40,27 @@
 }
 
 .timer-button.start {
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.timer-button.start:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
 }
 
 .timer-button.pause {
-  background-color: #FFC107;
-  color: #333;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
 }
 
-.timer-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.timer-button.pause:hover {
+  background: linear-gradient(135deg, #D97706, #B45309);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
 }
 
 .timer-button:active {
@@ -60,4 +69,14 @@
 
 .icon {
   font-size: 1.1rem;
+  margin-right: 8px;
+}
+
+/* Dark mode specific adjustments if needed */
+.dark .timer-container .time-display {
+  color: var(--text-secondary, #CBD5E1);
+}
+
+.dark .timer-container .time-value {
+  color: var(--text-primary, #F8FAFC);
 }

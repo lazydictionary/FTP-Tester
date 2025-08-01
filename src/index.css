@@ -9,8 +9,8 @@ body {
 }
 
 body.dark {
-  background-color: #121212; /* Dark gray */
-  color: #ffffff; /* White text */
+  background-color: #0F172A;
+  color: #F8FAFC;
 }
 
 * {
