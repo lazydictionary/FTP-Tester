@@ -14,3 +14,39 @@
     padding: 10px;
   }
 }
+
+/* Add to your CSS file */
+.static-marker {
+  position: absolute;
+  width: 2px;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.light .static-marker {
+  background-color: #FF7043;
+}
+
+.dark .static-marker {
+  background-color: #FFA726;
+}
+
+.static-marker-label {
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.light .static-marker-label {
+  color: #FF7043;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.dark .static-marker-label {
+  color: #FFA726;
+  background-color: rgba(45, 45, 45, 0.7);
+}

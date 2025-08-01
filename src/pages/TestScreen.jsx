@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import PowerGraph from '../components/PowerGraph';
 import Timer from '../components/Timer';
 import './TestScreen.css';
@@ -10,19 +10,27 @@ export default function TestScreen({
   protocol = null,
   warmup = null,
   darkMode,
-  toggleDarkMode
+  toggleDarkMode,
+  onShowResults
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const powerHistory = useRef([]);
 
-  // Unified stage text for both test types
-  const getStageText = () => {
-    const minutes = elapsedSeconds / 60;
-    if (minutes < 5) return 'Warmup Phase';
-    if (minutes >= 19.5) return 'Current FTP Met';
-    return 'Test in Progress';
-  };
+  // Store power output for each second
+  useEffect(() => {
+    if (isRunning) {
+      const power = testType === '20min'
+        ? protocol?.calculatePower?.(goalFTP, elapsedSeconds) ?? goalFTP * 0.95
+        : (() => {
+            const stage = Math.floor(elapsedSeconds / 60);
+            return currentFTP * (stage < 5 ? 0.46 : 0.46 + 0.06 * (stage - 4));
+          })();
+      powerHistory.current.push(power);
+    }
+  }, [isRunning, elapsedSeconds, testType, goalFTP, currentFTP, protocol]);
 
+  // Timer logic
   useEffect(() => {
     let interval;
     if (isRunning) {
@@ -33,6 +41,58 @@ export default function TestScreen({
     return () => clearInterval(interval);
   }, [isRunning]);
 
+  // Calculate FTP
+  // In TestScreen.jsx - update your calculateFTP function:
+const calculateFTP = () => {
+  const history = powerHistory.current;
+  
+  if (testType === '20min') {
+    // For 20min test, just return the goal FTP
+    return goalFTP;
+  } else {
+    // Ramp test calculation
+    //if (elapsedSeconds < 300) { // Less than 5 minutes (warmup phase)
+    //  return 0; // Test not valid yet
+    //}
+
+    // Calculate the exact minute value including fractions
+    const exactMinute = elapsedSeconds / 60;
+    
+    // Get the current stage (integer minute)
+    const currentStage = Math.floor(exactMinute);
+    
+    // Calculate power at current minute
+    const highTestValue = currentFTP * (currentStage < 5 ? 0.46 : 0.46 + 0.06 * (currentStage - 4));
+    
+    // Calculate power at previous minute
+    const prevStage = currentStage - 1;
+    const lowTestValue = currentFTP * (prevStage < 5 ? 0.46 : 0.46 + 0.06 * (prevStage - 4));
+    
+    // Calculate weighted average based on how far into the current minute we are
+    const minuteFraction = exactMinute - currentStage;
+    const currentPower = (lowTestValue * (1 - minuteFraction)) + (highTestValue * minuteFraction);
+    
+    // For ramp test: 75% of the last completed minute's power
+    // (or average of last 60 seconds if we have the data)
+    if (history.length >= 60) {
+      const last60Seconds = history.slice(-60);
+      const avgPower = last60Seconds.reduce((sum, power) => sum + power, 0) / 60;
+      return Math.round(avgPower * 0.75);
+    } else {
+      // Fallback calculation if we don't have full 60 seconds of data
+      return Math.round(currentPower * 0.75);
+    }
+  }
+  };
+
+  // Unified stage text for both test types
+  const getStageText = () => {
+    const minutes = elapsedSeconds / 60;
+    if (minutes < 5) return 'Warmup Phase';
+    if (minutes >= 19.5) return 'Current FTP Met';
+    return 'Test in Progress';
+  };
+
   const targetPower = useMemo(() => {
     if (testType === '20min') {
       const protocolPower = protocol?.calculatePower?.(goalFTP, elapsedSeconds);
@@ -41,6 +101,19 @@ export default function TestScreen({
     const stage = Math.floor(elapsedSeconds / 60);
     return currentFTP * (stage < 5 ? 0.46 : 0.46 + 0.06 * (stage - 4));
   }, [testType, goalFTP, currentFTP, elapsedSeconds, protocol]);
+
+  // Show results when test ends
+  const handleEndTest = () => {
+    setIsRunning(false);
+    const calculatedFTP = calculateFTP();
+    onShowResults({
+      currentFTP,
+      elapsedSeconds,
+      testType,
+      calculatedFTP,
+      peakPower: testType === 'ramp' ? calculatedFTP / 0.75 : calculatedFTP / 0.95
+    });
+  };
 
   return (
     <div className={`test-screen ${darkMode ? 'dark' : 'light'}`}>
@@ -85,7 +158,7 @@ export default function TestScreen({
           darkMode={darkMode}
         />
         <button 
-          onClick={() => setIsRunning(false)}
+          onClick={handleEndTest}
           className="end-test-button"
         >
           End Test
