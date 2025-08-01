@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './SetupScreen.css';
 import { TwentyMinTestProtocols} from './TestProtocols';
 
@@ -22,13 +22,14 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
     <div className={`setup-container ${darkMode ? 'dark' : 'light'}`}>
       <div className="header">
         <h1>Select Your FTP Test</h1>
-        <button 
-          onClick={toggleDarkMode}
-          className="theme-toggle"
-          aria-label="Toggle dark mode"
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
+        <div className="button-group">
+          <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
+            🛈
+          </button>
+          <button className="theme-toggle" onClick={toggleDarkMode}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
       </div>
       
       <div className="test-options">
