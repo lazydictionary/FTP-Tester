@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef, useCallback } from 'react';
 import { Chart } from 'chart.js/auto';
 
 export default function PowerGraph({ 
@@ -13,6 +13,7 @@ export default function PowerGraph({
   const chartRef = useRef(null);
   const containerRef = useRef(null);
   const markerRef = useRef(null);
+  const staticMarkerRef = useRef({ line: null, label: null });
 
   // Generate static chart data with minute ticks
   const { data, labels } = useMemo(() => {
@@ -29,12 +30,68 @@ export default function PowerGraph({
     };
   }, [testType, currentFTP, goalFTP, protocol]);
 
-  // Initialize chart and marker
+  // Function to add/update static marker
+  // Update the updateStaticMarker function
+const updateStaticMarker = useCallback(() => {
+  if (!chartRef.current || !containerRef.current || testType === '20min') {  // Changed condition
+    return;
+  }
+
+  const chart = chartRef.current;
+  if (!chart.chartArea) return;
+
+  // Remove existing markers if they exist
+  if (staticMarkerRef.current.line && staticMarkerRef.current.line.parentNode) {
+    containerRef.current.removeChild(staticMarkerRef.current.line);
+  }
+  if (staticMarkerRef.current.label && staticMarkerRef.current.label.parentNode) {
+    containerRef.current.removeChild(staticMarkerRef.current.label);
+  }
+
+  const chartArea = chart.chartArea;
+  const xPosition = chartArea.left + (chartArea.right - chartArea.left) * (19.5 / 30); // Changed to 30 for ramp test
+
+  // Create vertical line marker
+  const markerLine = document.createElement('div');
+  markerLine.className = 'static-marker';
+  markerLine.style.position = 'absolute';
+  markerLine.style.left = `${xPosition}px`;
+  markerLine.style.top = `${chartArea.top}px`;
+  markerLine.style.width = '2px';
+  markerLine.style.height = `${chartArea.bottom - chartArea.top}px`;
+  markerLine.style.backgroundColor = darkMode ? '#FFA726' : '#FF7043';
+  markerLine.style.zIndex = '9';
+  markerLine.style.pointerEvents = 'none';
+
+  // Create label
+  const markerLabel = document.createElement('div');
+  markerLabel.className = 'static-marker-label';
+  markerLabel.textContent = 'Current FTP';
+  markerLabel.style.position = 'absolute';
+  markerLabel.style.left = `${xPosition + 5}px`;
+  markerLabel.style.top = `${chartArea.top + 10}px`;
+  markerLabel.style.color = darkMode ? '#FFA726' : '#FF7043';
+  markerLabel.style.fontSize = '12px';
+  markerLabel.style.fontWeight = 'bold';
+  markerLabel.style.backgroundColor = darkMode ? 'rgba(45, 45, 45, 0.7)' : 'rgba(255, 255, 255, 0.7)';
+  markerLabel.style.padding = '2px 5px';
+  markerLabel.style.borderRadius = '3px';
+  markerLabel.style.zIndex = '9';
+  markerLabel.style.pointerEvents = 'none';
+
+  // Add elements to container
+  containerRef.current.appendChild(markerLine);
+  containerRef.current.appendChild(markerLabel);
+
+  // Store references
+  staticMarkerRef.current = { line: markerLine, label: markerLabel };
+}, [testType, darkMode]);
+
+  // Initialize chart and markers
   useEffect(() => {
     const ctx = canvasRef.current;
     if (!ctx) return;
 
-    // Cleanup function to remove chart and marker
     const cleanup = () => {
       if (chartRef.current) {
         chartRef.current.destroy();
@@ -44,19 +101,22 @@ export default function PowerGraph({
         containerRef.current.removeChild(markerRef.current);
         markerRef.current = null;
       }
+      if (staticMarkerRef.current.line && staticMarkerRef.current.line.parentNode) {
+        containerRef.current.removeChild(staticMarkerRef.current.line);
+      }
+      if (staticMarkerRef.current.label && staticMarkerRef.current.label.parentNode) {
+        containerRef.current.removeChild(staticMarkerRef.current.label);
+      }
     };
 
-    // Clean up before creating new chart/marker
     cleanup();
 
-    // Calculate dynamic y-axis min/max
     const maxDataValue = Math.max(...data);
     const minDataValue = Math.min(...data);
-    const yAxisPadding = 20; // watts padding
+    const yAxisPadding = 20;
     const yMax = Math.ceil((maxDataValue + yAxisPadding) / 10) * 10;
     const yMin = Math.max(0, Math.floor((minDataValue - yAxisPadding) / 10) * 10);
 
-    // Create new chart
     chartRef.current = new Chart(ctx, {
       type: 'line',
       data: {
@@ -78,7 +138,13 @@ export default function PowerGraph({
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 0 },
+        animation: { 
+          duration: 0,
+          onComplete: () => {
+            // Add static marker after chart animation completes
+            setTimeout(updateStaticMarker, 0);
+          }
+        },
         interaction: {
           intersect: false,
           mode: 'index'
@@ -163,9 +229,9 @@ export default function PowerGraph({
           }
         }
       }
-  });
+    });
 
-    // Always create a new marker after cleanup
+    // Create moving marker
     if (containerRef.current) {
       markerRef.current = document.createElement('div');
       markerRef.current.style.position = 'absolute';
@@ -178,9 +244,9 @@ export default function PowerGraph({
     }
 
     return cleanup;
-  }, [data, labels, currentFTP, testType, darkMode]);
+  }, [data, labels, currentFTP, testType, darkMode, updateStaticMarker]);
 
-  // Update marker position
+  // Update moving marker position
   useEffect(() => {
     if (!markerRef.current || !chartRef.current || !containerRef.current) return;
 

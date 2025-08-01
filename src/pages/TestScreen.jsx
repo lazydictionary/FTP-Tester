@@ -42,21 +42,47 @@ export default function TestScreen({
   }, [isRunning]);
 
   // Calculate FTP
-  const calculateFTP = () => {
-    const history = powerHistory.current;
-    if (testType === '20min') {
-      // Use average power over the whole test
-      const avg = history.reduce((a, b) => a + b, 0) / history.length || 0;
-      return Math.round(avg * 0.95);
+  // In TestScreen.jsx - update your calculateFTP function:
+const calculateFTP = () => {
+  const history = powerHistory.current;
+  
+  if (testType === '20min') {
+    // For 20min test, just return the goal FTP
+    return goalFTP;
+  } else {
+    // Ramp test calculation
+    //if (elapsedSeconds < 300) { // Less than 5 minutes (warmup phase)
+    //  return 0; // Test not valid yet
+    //}
+
+    // Calculate the exact minute value including fractions
+    const exactMinute = elapsedSeconds / 60;
+    
+    // Get the current stage (integer minute)
+    const currentStage = Math.floor(exactMinute);
+    
+    // Calculate power at current minute
+    const highTestValue = currentFTP * (currentStage < 5 ? 0.46 : 0.46 + 0.06 * (currentStage - 4));
+    
+    // Calculate power at previous minute
+    const prevStage = currentStage - 1;
+    const lowTestValue = currentFTP * (prevStage < 5 ? 0.46 : 0.46 + 0.06 * (prevStage - 4));
+    
+    // Calculate weighted average based on how far into the current minute we are
+    const minuteFraction = exactMinute - currentStage;
+    const currentPower = (lowTestValue * (1 - minuteFraction)) + (highTestValue * minuteFraction);
+    
+    // For ramp test: 75% of the last completed minute's power
+    // (or average of last 60 seconds if we have the data)
+    if (history.length >= 60) {
+      const last60Seconds = history.slice(-60);
+      const avgPower = last60Seconds.reduce((sum, power) => sum + power, 0) / 60;
+      return Math.round(avgPower * 0.75);
     } else {
-      // Ramp test: find highest 60s average, then 75% of that
-      let maxAvg = 0;
-      for (let i = 0; i <= history.length - 60; i++) {
-        const windowAvg = history.slice(i, i + 60).reduce((a, b) => a + b, 0) / 60;
-        if (windowAvg > maxAvg) maxAvg = windowAvg;
-      }
-      return Math.round(maxAvg * 0.75);
+      // Fallback calculation if we don't have full 60 seconds of data
+      return Math.round(currentPower * 0.75);
     }
+  }
   };
 
   // Unified stage text for both test types
@@ -85,6 +111,7 @@ export default function TestScreen({
       elapsedSeconds,
       testType,
       calculatedFTP,
+      peakPower: testType === 'ramp' ? calculatedFTP / 0.75 : calculatedFTP / 0.95
     });
   };
 
