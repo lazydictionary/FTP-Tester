@@ -29,7 +29,7 @@
   --border-color: #334155;
   --border-active: #34D399;
   --border-hover: #065F46;
-  --power-bg: #064E3B;
+  --power-bg: #1E293B;
   --power-border: #34D399;
   --power-text: #6EE7B7;
   --shadow: rgba(0, 0, 0, 0.4);
@@ -80,12 +80,15 @@
   background: var(--power-bg);
   border: 3px solid var(--power-border);
   border-radius: 20px;
-  padding: 10px 10px;
-  text-align: center;
-  margin: 0 auto 20px;
-  width: 50%;
+  padding: 25px 10px;
   box-shadow: 0 10px 30px var(--shadow);
   transition: all 0.3s ease;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .power-display:hover {
@@ -93,7 +96,7 @@
 }
 
 .power-value {
-  font-size: 3.0rem;
+  font-size: 5.0rem;
   font-weight: 800;
   color: var(--power-border);
   line-height: 1;
@@ -106,17 +109,6 @@
   font-weight: 500;
   color: var(--text-secondary);
   margin-left: 10px;
-}
-
-.stage-indicator {
-  font-size: 1.0rem;
-  font-weight: 600;
-  color: var(--text-accent);
-  background: var(--bg-secondary);
-  padding: 8px 20px;
-  border-radius: 20px;
-  display: inline-block;
-  border: 2px solid var(--border-color);
 }
 
 .graph-container {
@@ -138,16 +130,16 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  margin-top: 24px;
+  margin-top: 0;
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
   border-radius: 20px;
-  width: 50%;
   padding: 25px;
   box-shadow: 0 8px 25px var(--shadow);
   transition: all 0.3s ease;
-  margin-left: auto;
-  margin-right: auto;
+  flex: 1;
+  height: 100%;
+  justify-content: center;
 }
 
 .timer-controls:hover {
@@ -187,18 +179,21 @@
   transform: translateY(0);
 }
 
+.top-row {
+  display: flex;
+  align-items: stretch;
+  gap: 32px;
+  margin-bottom: 30px;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .power-value {
-    font-size: 3.5rem;
+    font-size: 10.0rem;
   }
   
   .power-unit {
-    font-size: 1.4rem;
-  }
-  
-  .stage-indicator {
-    font-size: 1.1rem;
+    font-size: 2.0rem;
   }
   
   .header h1 {
@@ -208,4 +203,23 @@
   .power-display {
     padding: 30px 15px;
   }
+  
+  .top-row {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .power-display,
+  .timer-controls {
+    width: 100%;
+    margin-bottom: 0;
+    height: auto;
+  }
+}
+
+.power-display,
+.timer-controls {
+  flex: 1 1 0;
+  min-height: 0;
+  height: auto;
 }
