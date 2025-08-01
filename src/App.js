@@ -3,6 +3,7 @@ import SetupScreen from './pages/SetupScreen';
 import TestScreen from './pages/TestScreen';
 import ResultsScreen from './pages/ResultsScreen';
 import ConfettiOverlay from './components/ConfettiOverlay';
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [testParams, setTestParams] = useState(null);
@@ -95,6 +96,7 @@ function App() {
           darkMode={darkMode}
         />
       )}
+            <Analytics />
     </div>
   );
 }
