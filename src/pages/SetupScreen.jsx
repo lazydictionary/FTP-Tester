@@ -24,7 +24,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
         <h1>Select Your FTP Test</h1>
         <div className="button-group">
           <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
-            🛈
+            ℹ️ 
           </button>
           <button className="theme-toggle" onClick={toggleDarkMode}>
             {darkMode ? '☀️' : '🌙'}

@@ -107,7 +107,7 @@ const calculateFTP = () => {
         <h1>{testType === '20min' ? '20-Minute FTP Test' : 'Ramp FTP Test'}</h1>
         <div className="button-group">
           <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
-            🛈
+            ℹ️
           </button>
           <button className="theme-toggle" onClick={toggleDarkMode}>
             {darkMode ? '☀️' : '🌙'}
