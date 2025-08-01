@@ -1,5 +1,5 @@
 .setup-container.light {
-  --bg-primary: #FAFAFA;
+  --bg-primary: #e0e0e0;
   --bg-secondary: #F1F5F9;
   --bg-accent: #ECFDF5;
   --bg-card: #FFFFFF;
@@ -66,6 +66,8 @@
 }
 
 .theme-toggle:hover {
+  background: linear-gradient(135deg, #10B981, #059669);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
   border-color: var(--border-active);
   transform: scale(1.05);
 }
@@ -144,7 +146,7 @@
 }
 
 .start-button {
-  background: linear-gradient(135deg, #10B981, #059669);
+  background: linear-gradient(135deg, #059669, #047857);
   color: white;
   padding: 18px;
   border: none;
@@ -160,7 +162,7 @@
 .start-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-  background: linear-gradient(135deg, #059669, #047857);
+  background: linear-gradient(135deg, #10B981, #059669);
 } 
 
 .start-button:active {
@@ -168,7 +170,7 @@
 }
 
 .setup-options {
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .setup-options h3 {

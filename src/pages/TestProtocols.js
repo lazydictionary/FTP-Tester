@@ -21,14 +21,3 @@ export const TwentyMinTestProtocols = {
     }
   }
 };
-
-export const WarmupProtocols = {
-  STANDARD: {
-    name: "Standard Warmup",
-    steps: [
-      { duration: 600, power: 0.5 },
-      { duration: 300, power: 0.7 },
-      { duration: 120, power: 0.9 }
-    ]
-  }
-};

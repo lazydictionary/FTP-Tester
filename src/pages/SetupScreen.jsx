@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './SetupScreen.css';
-import { TwentyMinTestProtocols, WarmupProtocols } from './TestProtocols';
+import { TwentyMinTestProtocols} from './TestProtocols';
 
 export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
   const [currentFTP, setCurrentFTP] = useState(150);
   const [goalFTP, setGoalFTP] = useState(175);
   const [testType, setTestType] = useState('ramp');
   const [selectedProtocol, setSelectedProtocol] = useState(TwentyMinTestProtocols.STANDARD);
-  const [selectedWarmup, setSelectedWarmup] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +15,6 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
       currentFTP,
       goalFTP,
       protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD,
-      warmup: testType === '20min' ? selectedWarmup : null,
     });
   };
 
@@ -57,22 +55,26 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
       </div>
 
       <form onSubmit={handleSubmit} className="ftp-form">
-        <label>
-          Current FTP (watts):
-          <input
-            type="number"
-            value={currentFTP}
-            onChange={(e) => setCurrentFTP(Number(e.target.value))}
-            min="50"
-            max="999"
-            required
-          />
-        </label>
+        {testType === 'ramp' && (
+          <>
+            <label>
+            Current FTP (Watts):
+            <input
+              type="number"
+              value={currentFTP}
+              onChange={(e) => setCurrentFTP(Number(e.target.value))}
+              min="50"
+              max="999"
+              required
+            />
+          </label>
+          </>
+        )}
 
         {testType === '20min' && (
           <>
             <label>
-              Goal FTP (watts):
+              Goal FTP (Watts):
               <input
                 type="number"
                 value={goalFTP}
@@ -96,23 +98,6 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
                     <p>{protocol.description}</p>
                   </div>
                 ))}
-              </div>
-
-              <div className="warmup-toggle">
-                <label>
-                  <input 
-                    type="checkbox" 
-                    checked={!!selectedWarmup}
-                    onChange={(e) => setSelectedWarmup(e.target.checked ? WarmupProtocols.STANDARD : null)}
-                  />
-                  Include Warmup
-                </label>
-                
-                {selectedWarmup && (
-                  <div className="warmup-options">
-                    <p>Warmup: {selectedWarmup.name}</p>
-                  </div>
-                )}
               </div>
             </div>
           </>

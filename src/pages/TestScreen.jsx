@@ -8,7 +8,6 @@ export default function TestScreen({
   currentFTP, 
   goalFTP, 
   protocol = null,
-  warmup = null,
   darkMode,
   toggleDarkMode,
   onShowResults,
