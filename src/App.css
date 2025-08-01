@@ -2,3 +2,8 @@
   text-align: center;
   margin-top: 50px;
 }
+
+.app-container {
+  position: relative;
+  min-height: 100vh;
+}
