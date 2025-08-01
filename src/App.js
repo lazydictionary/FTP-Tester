@@ -96,7 +96,7 @@ function App() {
           darkMode={darkMode}
         />
       )}
-            <Analytics />
+            <Analytics mode="production" />
     </div>
   );
 }
