@@ -64,7 +64,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
               type="number"
               value={currentFTP}
               onChange={(e) => setCurrentFTP(Number(e.target.value))}
-              min="50"
+              min="1"
               max="999"
               required
             />
@@ -80,8 +80,8 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
                 type="number"
                 value={goalFTP}
                 onChange={(e) => setGoalFTP(Number(e.target.value))}
-                min={currentFTP + 1}
-                max="500"
+                min='1'
+                max="999"
                 required
               />
             </label>
