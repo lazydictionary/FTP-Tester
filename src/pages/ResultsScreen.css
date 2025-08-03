@@ -9,6 +9,8 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem; 
+  overflow: auto;
 }
 
 .results-modal-overlay.dark {
@@ -20,9 +22,13 @@
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
+  max-height: 90vh;
   position: relative;
   padding: 2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .dark .results-modal {
@@ -49,6 +55,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 0.5rem; 
 }
 
 .results-trophy {
@@ -186,4 +195,57 @@
 
 .dark .results-btn-primary {
   background: #1d4ed8;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.peloton-data {
+  grid-column: 1 / -1;
+  background-color: #fff8e6;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #ffd166;
+  position: relative;
+}
+
+.dark .peloton-data {
+  background-color: #453a1a;
+  border-color: #ffd166;
+}
+
+.peloton-data .results-grid-label {
+  color: #e67700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dark .peloton-data .results-grid-label {
+  color: #ffd166;
+}
+
+.warning-icon {
+  color: #e67700;
+}
+
+.dark .warning-icon {
+  color: #ffd166;
+}
+
+.peloton-note {
+  font-size: 0.75rem;
+  color: #e67700;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.dark .peloton-note {
+  color: #ffd166;
 }
