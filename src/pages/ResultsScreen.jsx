@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Trophy, Zap } from 'lucide-react';
+import { X, Trophy, Zap, AlertTriangle } from 'lucide-react';
 import './ResultsScreen.css';
 
 const ResultsScreen = ({ 
@@ -22,6 +22,9 @@ const ResultsScreen = ({
     ? Math.round(calculatedFTP / 0.75) // Reverse calculate from FTP for ramp
     : Math.round(calculatedFTP / 0.95); // Reverse calculate from FTP for 20min
 
+  // Calculate Peloton adjusted FTP
+  const pelotonFTP = Math.round(calculatedFTP / 0.95);
+
   return (
     <div className={`results-modal-overlay ${darkMode ? 'dark' : 'light'}`}>
       <div className="results-modal">
@@ -43,6 +46,14 @@ const ResultsScreen = ({
             <div className="results-ftp-units">watts</div>
           </div>
           <div className="results-grid">
+            <div className="peloton-data">
+              <div className="results-grid-label">
+                <AlertTriangle size={32} className="warning-icon" />
+                Enter This Number in Your Peloton Settings
+              </div>
+              <div className="results-grid-value">{pelotonFTP}W</div>
+              <div className="peloton-note">(Your FTP ÷ 0.95 because Peloton takes 95% of any entered value)</div>
+            </div>
             <div>
               <div className="results-grid-label">Test Duration</div>
               <div className="results-grid-value">{formatTime(elapsedSeconds)}</div>

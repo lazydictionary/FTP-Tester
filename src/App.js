@@ -16,11 +16,7 @@ function App() {
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
-
-    // Toggle body class
     document.body.classList.toggle('dark', newMode);
-
-    // Save to localStorage
     localStorage.setItem('darkMode', JSON.stringify(newMode));
   };
 
@@ -60,6 +56,13 @@ function App() {
     setResultsParams(null);
   };
 
+  // New function to handle back to setup
+  const handleBackToSetup = () => {
+    setTestParams(null);
+    setResultsParams(null);
+    setShowResults(false);
+  };
+
   return (
     <div className={`app-container ${darkMode ? 'dark' : 'light'}`}>
       <ConfettiOverlay show={showConfetti} numberOfPieces={confettiActive ? 200 : 0} />
@@ -78,6 +81,7 @@ function App() {
             onShowResults={handleShowResults}
             setShowConfetti={setShowConfetti}
             setConfettiActive={setConfettiActive}
+            onBackToSetup={handleBackToSetup} // Add this prop
           />
           {showResults && resultsParams && (
             <ResultsScreen
@@ -96,7 +100,7 @@ function App() {
           darkMode={darkMode}
         />
       )}
-            <Analytics mode="production" />
+      <Analytics mode="production" />
     </div>
   );
 }

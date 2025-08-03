@@ -8,11 +8,13 @@ export default function TestScreen({
   currentFTP, 
   goalFTP, 
   protocol = null,
+  rampTestPercentage = 0.72,
   darkMode,
   toggleDarkMode,
   onShowResults,
   setShowConfetti,
-  setConfettiActive // <-- Add this prop
+  setConfettiActive,
+  onBackToSetup
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -42,36 +44,34 @@ export default function TestScreen({
     return () => clearInterval(interval);
   }, [isRunning]);
 
-  // Calculate FTP
-  // In TestScreen.jsx - update your calculateFTP function:
-const calculateFTP = () => {
-  const history = powerHistory.current;
-  
-  if (testType === '20min') {
-    // For 20min test, just return the goal FTP
-    return goalFTP;
-  } else {
-    // Ramp test calculation
-    if (elapsedSeconds < 300) {
-      return 0;
-    }
-
-    const exactMinute = elapsedSeconds / 60;
-    const currentStage = Math.floor(exactMinute);
-    const highTestValue = currentFTP * (currentStage < 5 ? 0.46 : 0.46 + 0.06 * (currentStage - 4));
-    const prevStage = currentStage - 1;
-    const lowTestValue = currentFTP * (prevStage < 5 ? 0.46 : 0.46 + 0.06 * (prevStage - 4));
-    const minuteFraction = exactMinute - currentStage;
-    const currentPower = (lowTestValue * (1 - minuteFraction)) + (highTestValue * minuteFraction);
+  const calculateFTP = () => {
+    const history = powerHistory.current;
     
-    if (history.length >= 60) {
-      const last60Seconds = history.slice(-60);
-      const avgPower = last60Seconds.reduce((sum, power) => sum + power, 0) / 60;
-      return Math.round(avgPower * 0.75);
+    if (testType === '20min') {
+      // For 20min test, just return the goal FTP
+      return goalFTP;
     } else {
-      return Math.round(currentPower * 0.75);
+      // Ramp test calculation
+      if (elapsedSeconds < 300) {
+        return 0;
+      }
+
+      const exactMinute = elapsedSeconds / 60;
+      const currentStage = Math.floor(exactMinute);
+      const highTestValue = currentFTP * (currentStage < 5 ? 0.46 : 0.46 + 0.06 * (currentStage - 4));
+      const prevStage = currentStage - 1;
+      const lowTestValue = currentFTP * (prevStage < 5 ? 0.46 : 0.46 + 0.06 * (prevStage - 4));
+      const minuteFraction = exactMinute - currentStage;
+      const currentPower = (lowTestValue * (1 - minuteFraction)) + (highTestValue * minuteFraction);
+      
+      if (history.length >= 60) {
+        const last60Seconds = history.slice(-60);
+        const avgPower = last60Seconds.reduce((sum, power) => sum + power, 0) / 60;
+        return Math.round(avgPower * rampTestPercentage);
+      } else {
+        return Math.round(currentPower * rampTestPercentage);
+      }
     }
-  }
   };
 
   const targetPower = useMemo(() => {
@@ -93,12 +93,24 @@ const calculateFTP = () => {
       elapsedSeconds,
       testType,
       calculatedFTP,
-      peakPower: testType === 'ramp' ? calculatedFTP / 0.75 : calculatedFTP / 0.95
+      peakPower: testType === 'ramp' 
+        ? calculatedFTP / rampTestPercentage 
+        : calculatedFTP / 0.95
     });
-    // Stop spawning new confetti after 10 seconds, but let existing pieces fall
+    
+    // Stop spawning new confetti after 10 seconds
     setTimeout(() => setConfettiActive(false), 10000);
-    // Hide confetti overlay after a bit longer (e.g., 15s)
+    // Hide confetti overlay after 15 seconds
     setTimeout(() => setShowConfetti(false), 15000);
+  };
+
+  const handleBackClick = () => {
+    // Either use the provided onBackToSetup function or refresh the page
+    if (onBackToSetup) {
+      onBackToSetup();
+    } else {
+      window.location.reload();
+    }
   };
 
   return (
@@ -106,14 +118,24 @@ const calculateFTP = () => {
       <div className="header">
         <h1>{testType === '20min' ? '20-Minute FTP Test' : 'Ramp FTP Test'}</h1>
         <div className="button-group">
-          <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
+          <button 
+            className="back-button"
+            onClick={handleBackClick}
+            aria-label="Back to setup"
+          >
+            ⬅️
+          </button>
+          <button 
+            className="info-page" 
+            onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}
+          >
             ℹ️
           </button>
           <button className="theme-toggle" onClick={toggleDarkMode}>
             {darkMode ? '☀️' : '🌙'}
           </button>
         </div>
-      </div> 
+      </div>
 
       <div className="top-row">
         <div className="power-display">

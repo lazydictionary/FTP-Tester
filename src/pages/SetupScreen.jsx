@@ -7,6 +7,8 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
   const [goalFTP, setGoalFTP] = useState(175);
   const [testType, setTestType] = useState('ramp');
   const [selectedProtocol, setSelectedProtocol] = useState(TwentyMinTestProtocols.STANDARD);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [rampTestPercentage, setRampTestPercentage] = useState(0.72);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +17,15 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
       currentFTP,
       goalFTP,
       protocol: testType === '20min' ? selectedProtocol : TwentyMinTestProtocols.STANDARD,
+      rampTestPercentage: testType === 'ramp' ? rampTestPercentage : null,
     });
+  };
+
+  const handlePercentageChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value >= 0.70 && value <= 0.80) {
+      setRampTestPercentage(value);
+    }
   };
 
   return (
@@ -39,7 +49,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
         >
           <h3>Ramp Test</h3>
           <p>• Based on your <strong>Current FTP</strong></p>
-          <p>• Uses 75% of best minute of output</p>
+          <p>• Uses 72% of best minute of output</p>
           <p>• Gradually ramp in difficulty</p>
           <p>• Recommended for beginners</p>
         </div>
@@ -59,16 +69,47 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
         {testType === 'ramp' && (
           <>
             <label>
-            Current FTP (Watts):
-            <input
-              type="number"
-              value={currentFTP}
-              onChange={(e) => setCurrentFTP(Number(e.target.value))}
-              min="1"
-              max="999"
-              required
-            />
-          </label>
+              Current FTP (Watts):
+              <input
+                type="number"
+                value={currentFTP}
+                onChange={(e) => setCurrentFTP(Number(e.target.value))}
+                min="1"
+                max="999"
+                required
+              />
+            </label>
+
+            <div className="advanced-toggle">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={showAdvanced}
+                  onChange={() => setShowAdvanced(!showAdvanced)}
+                />
+                Advanced Settings
+              </label>
+            </div>
+
+            {showAdvanced && (
+              <div className="advanced-settings">
+                <label>
+                  FTP Calculation Percentage (0.70-0.80):
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0.70"
+                    max="0.80"
+                    value={rampTestPercentage}
+                    onChange={handlePercentageChange}
+                    className="percentage-input"
+                  />
+                </label>
+                <p className="advanced-note">
+                  Default value of 72% is used to not overestimate FTP, 75% is the traditional value.
+                </p>
+              </div>
+            )}
           </>
         )}
 

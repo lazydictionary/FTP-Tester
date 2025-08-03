@@ -206,27 +206,51 @@
 
 .button-group {
   display: flex;
-  gap: 8px; /* Minimal spacing between buttons */
-  align-items: center; /* Ensures vertical alignment */
+  gap: 8px;
+  align-items: center;
 }
 
-.theme-toggle, .info-page {
-  /* Shared properties */
-  height: 44px; /* Fixed height for both */
-  min-width: 44px; /* Minimum touch target size */
+.theme-toggle, .info-page, .back-button {
+  height: 44px;
+  min-width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; /* Includes padding in height calculation */
+  box-sizing: border-box;
 }
 
 .theme-toggle {
-  padding: 0 15px; /* Horizontal padding only */
+  padding: 0 15px;
 }
 
-.info-page {
-  padding: 0; /* Remove padding since we're using fixed height */
-  width: 44px; /* Fixed width to match height */
+.info-page, .back-button {
+  padding: 0;
+  width: 44px;
+}
+
+.back-button {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 5px 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #10B981, #059669);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  border-color: var(--border-active);
+  transform: scale(1.05);
+  color: white;
 }
 
 /* Responsive design */
