@@ -13,7 +13,8 @@ export default function TestScreen({
   toggleDarkMode,
   onShowResults,
   setShowConfetti,
-  setConfettiActive
+  setConfettiActive,
+  onBackToSetup
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -103,11 +104,27 @@ export default function TestScreen({
     setTimeout(() => setShowConfetti(false), 15000);
   };
 
+  const handleBackClick = () => {
+    // Either use the provided onBackToSetup function or refresh the page
+    if (onBackToSetup) {
+      onBackToSetup();
+    } else {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className={`test-screen ${darkMode ? 'dark' : 'light'}`}>
       <div className="header">
         <h1>{testType === '20min' ? '20-Minute FTP Test' : 'Ramp FTP Test'}</h1>
         <div className="button-group">
+          <button 
+            className="back-button"
+            onClick={handleBackClick}
+            aria-label="Back to setup"
+          >
+            ⬅️
+          </button>
           <button 
             className="info-page" 
             onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}
@@ -118,7 +135,7 @@ export default function TestScreen({
             {darkMode ? '☀️' : '🌙'}
           </button>
         </div>
-      </div> 
+      </div>
 
       <div className="top-row">
         <div className="power-display">
