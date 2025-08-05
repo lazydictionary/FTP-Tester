@@ -13,6 +13,8 @@
   --power-bg: #c2e4da;
   --power-border: #10B981;
   --power-text: #059669;
+  --flash-bg: #FEF3C7;
+  --flash-border: #F59E0B;
   --shadow: rgba(15, 23, 42, 0.1);
   --shadow-hover: rgba(15, 23, 42, 0.15);
 }
@@ -32,6 +34,8 @@
   --power-bg: #1E293B;
   --power-border: #34D399;
   --power-text: #6EE7B7;
+  --flash-bg: #451A03;
+  --flash-border: #F59E0B;
   --shadow: rgba(0, 0, 0, 0.4);
   --shadow-hover: rgba(0, 0, 0, 0.5);
 }
@@ -113,6 +117,25 @@
   box-shadow: 0 15px 40px var(--shadow-hover);
 }
 
+/* Flashing power display animation */
+.power-display.flashing {
+  animation: powerFlash 1s ease-in-out infinite;
+}
+
+@keyframes powerFlash {
+  0%, 100% {
+    background: var(--power-bg);
+    border-color: var(--power-border);
+    box-shadow: 0 10px 30px var(--shadow);
+  }
+  50% {
+    background: var(--flash-bg);
+    border-color: var(--flash-border);
+    box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+    transform: scale(1.02);
+  }
+}
+
 .power-value {
   font-size: 5.0rem;
   font-weight: 800;
@@ -120,6 +143,21 @@
   line-height: 1;
   margin-bottom: 15px;
   text-shadow: 0 2px 4px var(--shadow);
+  transition: color 0.3s ease;
+}
+
+/* Flash the power value text color too */
+.power-display.flashing .power-value {
+  animation: powerValueFlash 1s ease-in-out infinite;
+}
+
+@keyframes powerValueFlash {
+  0%, 100% {
+    color: var(--power-border);
+  }
+  50% {
+    color: var(--flash-border);
+  }
 }
 
 .power-unit {
