@@ -14,7 +14,7 @@ export default function TestScreen({
   onShowResults,
   setShowConfetti,
   setConfettiActive,
-  onBackToSetup
+  onBackToSetup,
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
