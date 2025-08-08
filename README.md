@@ -4,7 +4,9 @@ https://ftp-tester.vercel.app/
 
 A modern, responsive web application for conducting Functional Threshold Power (FTP) tests for cyclists. Pull it up on your phone or desktop internet browser and start testing. Choose between a ramp test or a traditional 20-minute test.
 
-Financial support isn't needed, but is welcomed at https://buymeacoffee.com/lazydictionary
+Financial support isn't needed, but is welcomed:
+
+<a href="https://www.buymeacoffee.com/lazydictionary" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## 🎯 What is FTP Testing?
 
