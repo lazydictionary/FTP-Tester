@@ -33,6 +33,21 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
       <div className="header">
         <h1>Select Your FTP Test</h1>
         <div className="button-group">
+          <button
+            onClick={() => window.open('https://www.buymeacoffee.com/lazydictionary', '_blank')}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer'
+            }}
+          >
+            <img
+              src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+              alt="Buy Me A Coffee"
+              style={{ height: '60px', width: '217px' }}
+            />
+          </button>
           <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
             ℹ️ 
           </button>
