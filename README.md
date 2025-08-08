@@ -2,7 +2,9 @@
 
 https://ftp-tester.vercel.app/
 
-A modern, responsive web application for conducting Functional Threshold Power (FTP) tests for cyclists. Simply pull it up on your phone or desktop internet browser and start testing. Choose between a ramp test or traditional 20 minute test.
+A modern, responsive web application for conducting Functional Threshold Power (FTP) tests for cyclists. Pull it up on your phone or desktop internet browser and start testing. Choose between a ramp test or a traditional 20-minute test.
+
+Financial support isn't needed, but is welcomed at https://buymeacoffee.com/lazydictionary
 
 ## 🎯 What is FTP Testing?
 
@@ -26,6 +28,7 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 
 ### 📊 Real-Time Visualization
 - Interactive power graphs with live progress tracking
+- Audio and visual cueing so you don't miss the next change in wattage
 - Visual markers showing current position and FTP reference points
 - Responsive charts that adapt to both test types
 - Hover tooltips displaying precise power and time data
@@ -36,12 +39,12 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 
 ### 🎉 Results
 - Automatic ramp test FTP calculation
-- 20 minute test options always result in your Goal FTP if followed
+- Shows you the correct value to manually enter into the Peloton system
 
 ### 🎛️ User Experience
 - Light/Dark mode
 - Clean, distraction-free testing interface
-- Prominent display of current required Wattage
+- Prominent display of the current required wattage
 
 ## 📱 Usage Guide
 
@@ -59,6 +62,7 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 
 3. **Start Testing**:
    - Follow the real-time power targets on the graph
+   - No standing, if possible - limit to the first 5 minutes of the ramp warmup at most
    - Use the timer controls to pause/resume as needed
    - Monitor your progress with visual indicators
 
@@ -67,6 +71,7 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 - **Power Display**: Large, clear wattage target
 - **Progress Graph**: Real-time visualization of your position
 - **Timer Controls**: Easy pause/resume functionality
+- **Audio/Visual Cues**: Countdown and beeps will indicate upcoming wattage change
 
 ### After the Test
 
@@ -78,7 +83,7 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 ### Ramp Test
 - **Duration**: Variable (typically 15-25 minutes)
 - **Structure**: Power increases every minute by 6%, first five minutes at 46%
-- **Calculation**: 72% of highest 1-minute average
+- **Calculation**: 72% of the highest 1-minute average
 - **Best For**: New cyclists, those who dislike or are afraid of 20-minute tests
 
 ### 20-Minute Test
@@ -90,5 +95,7 @@ Functional Threshold Power (FTP) is the maximum power a cyclist can sustain for 
 ## 🤝 Feature Requests/Contributing
 
 Feedback and requests are welcome! Message me on reddit (/u/lazydictionary), or open an issue with the "feature request" label on GitHub.
+
+Financial support isn't needed, but is welcomed at https://buymeacoffee.com/lazydictionary
 
 **Happy Testing! 🚴‍♂️💨**
