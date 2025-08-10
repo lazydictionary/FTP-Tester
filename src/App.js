@@ -56,7 +56,6 @@ function App() {
     setResultsParams(null);
   };
 
-  // New function to handle back to setup
   const handleBackToSetup = () => {
     setTestParams(null);
     setResultsParams(null);
@@ -81,7 +80,7 @@ function App() {
             onShowResults={handleShowResults}
             setShowConfetti={setShowConfetti}
             setConfettiActive={setConfettiActive}
-            onBackToSetup={handleBackToSetup} // Add this prop
+            onBackToSetup={handleBackToSetup}
           />
           {showResults && resultsParams && (
             <ResultsScreen
