@@ -3,44 +3,17 @@
   "name": "FTP Tester App",
   "icons": [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "src": "Icon-64.ico",    
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "Icon-192.png",
-=======
-      "src": "../icons/icon-48.webp",
-      "type": "image/png",
-      "sizes": "48x48",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-72.webp",
->>>>>>> de33c0f (Icon generation)
-=======
-      "src": "Icon-64.ico",    
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "Icon-192.png",
->>>>>>> 147da45 (Change manifest.json)
+      "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "src": "Icon-512.png",
-=======
-      "src": "../icons/icon-96.webp",
->>>>>>> de33c0f (Icon generation)
-=======
-      "src": "Icon-512.png",
->>>>>>> 147da45 (Change manifest.json)
+      "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
