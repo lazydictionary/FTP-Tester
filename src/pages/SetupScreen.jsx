@@ -45,7 +45,7 @@ export default function SetupScreen({ onStartTest, darkMode, toggleDarkMode }) {
             <img
               src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
               alt="Buy Me A Coffee"
-              style={{ height: '60px', width: '217px' }}
+              style={{ height: '30px', width: '108px' }}
             />
           </button>
           <button className="info-page" onClick={() => window.open('https://github.com/lazydictionary/FTP-Tester', '_blank', 'noopener,noreferrer')}>
