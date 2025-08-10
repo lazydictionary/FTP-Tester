@@ -1,6 +1,6 @@
 {
-  "short_name": "FTP Trainer",  
-  "name": "FTP Trainer App",    
+  "short_name": "FTP Tester",
+  "name": "FTP Tester App",
   "icons": [
     {
       "src": "Icon-64.ico",    
