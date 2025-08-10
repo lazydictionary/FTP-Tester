@@ -4,6 +4,7 @@
   "icons": [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "src": "Icon-64.ico",    
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
@@ -19,43 +20,29 @@
     {
       "src": "../icons/icon-72.webp",
 >>>>>>> de33c0f (Icon generation)
-      "type": "image/png",
-      "sizes": "72x72",
-      "purpose": "any maskable"
+=======
+      "src": "Icon-64.ico",    
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
     },
     {
+      "src": "Icon-192.png",
+>>>>>>> 147da45 (Change manifest.json)
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "src": "Icon-512.png",
 =======
       "src": "../icons/icon-96.webp",
 >>>>>>> de33c0f (Icon generation)
+=======
+      "src": "Icon-512.png",
+>>>>>>> 147da45 (Change manifest.json)
       "type": "image/png",
-      "sizes": "96x96",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-128.webp",
-      "type": "image/png",
-      "sizes": "128x128",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-192.webp",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-256.webp",
-      "type": "image/png",
-      "sizes": "256x256",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../icons/icon-512.webp",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
